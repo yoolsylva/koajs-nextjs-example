@@ -16,7 +16,7 @@ class InvoicesControllers {
         if (ctx.request.query.pageSize !== undefined) {
             pageSize = parseInt(ctx.request.query.pageSize)
         }
-        ctx.body = await Invoice.find().sort({createdDate: -1}).limit(pageSize).skip(page*pageSize);
+        ctx.body = await Invoice.find().sort({createdDate: -1}).limit(pageSize).skip(page * pageSize);
     }
 
     /**
@@ -44,9 +44,14 @@ class InvoicesControllers {
      */
     async add(ctx) {
         try {
-            console.log(ctx.request.body)
-            const invoice = await new Invoice(ctx.request.body).save();
-            ctx.body = invoice;
+            const invoice = {
+                createdDate: ctx.request.body.createdDate,
+                type: ctx.request.body.type,
+                price: ctx.request.body.price,
+                comment: ctx.request.body.comment
+            }
+            const result = await new Invoice(invoice).save();
+            ctx.body = result;
         } catch (err) {
             ctx.throw(422);
         }
@@ -58,14 +63,20 @@ class InvoicesControllers {
      */
     async update(ctx) {
         try {
-            const invoice = await Invoice.findByIdAndUpdate(
+            const invoice = {
+                createdDate: ctx.request.body.createdDate,
+                type: ctx.request.body.type,
+                price: ctx.request.body.price,
+                comment: ctx.request.body.comment
+            }
+            const result = await Invoice.findByIdAndUpdate(
                 ctx.params.id,
-                ctx.request.body
+                invoice
             );
-            if (!invoice) {
+            if (!result) {
                 ctx.throw(404);
             }
-            ctx.body = invoice;
+            ctx.body = result;
         } catch (err) {
             if (err.name === 'CastError' || err.name === 'NotFoundError') {
                 ctx.throw(404);
