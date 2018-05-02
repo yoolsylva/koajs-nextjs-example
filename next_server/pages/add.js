@@ -1,7 +1,8 @@
 import React from 'react'
 import fetch from 'node-fetch'
 import Router from 'next/router'
-import Add from '../../components/add'
+import Add from '../components/Add'
+import Layout from "../components/Layout";
 
 export default class App extends React.Component {
 
@@ -55,7 +56,10 @@ export default class App extends React.Component {
 
     render() {
         return (
-           <Add data={this.state} handleChange={e => this.handleChange(e)} handleSubmit={e => this.handleSubmit(e)} handleCancel={e => this.handleCancel(e)} />
+            <Layout>
+                <Add data={this.state} handleChange={e => this.handleChange(e)} handleSubmit={e => this.handleSubmit(e)}
+                     handleCancel={e => this.handleCancel(e)}/>
+            </Layout>
         )
     }
 }

@@ -9,7 +9,7 @@ Koa 2 RESTful API using :
 * Babel
 * Asynchronous Functions (Async/Await)
 
-Next SSR
+Next.js use as frontend and Server side rendering
 
 ## Running
 

@@ -1,7 +1,8 @@
 import React from 'react'
 import fetch from 'node-fetch'
-import Home from '../components/home'
+import Home from '../components/Home'
 import Router from 'next/router'
+import Layout from "../components/Layout";
 
 export default class App extends React.Component {
     static async getInitialProps({query}) {
@@ -56,7 +57,7 @@ export default class App extends React.Component {
         const name = target.name
 
         let page = name === 'prev' ? this.state.page - 1 : this.state.page + 1
-        if(page < 0) page = 0
+        if (page < 0) page = 0
 
         Router.push({
             pathname: '/',
@@ -67,7 +68,10 @@ export default class App extends React.Component {
     render() {
         console.log('render')
         return (
-            <Home data={this.state} handleChange={e => this.handleChange(e)} handleClick={e => this.handleClick(e)}/>
+            <Layout>
+                <Home data={this.state} handleChange={e => this.handleChange(e)}
+                      handleClick={e => this.handleClick(e)}/>
+            </Layout>
         )
     }
 }
